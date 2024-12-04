@@ -1,5 +1,6 @@
 import numpy
 import SimpleITK as sitk
+import sys
 
 from radiomics import base, cShape, deprecated
 
@@ -64,9 +65,19 @@ class RadiomicsShape(base.RadiomicsFeaturesBase):
 
     self.inputMask = cpif.Execute(self.inputMask)
 
+    
+
     # Reassign self.maskArray using the now-padded self.inputMask
     self.maskArray = (sitk.GetArrayFromImage(self.inputMask) == self.label)
     self.labelledVoxelCoordinates = numpy.where(self.maskArray != 0)
+
+    #check if the code can perform shape calculation based on MaskArray dimension
+    MASKARRAY = sitk.GetArrayFromImage(self.inputMask)
+    dim = MASKARRAY.shape
+    if dim[0]*dim[1]*dim[2]*9 > 1000: #MAX UNSIGNED LONG
+      self.logger.error("Size of the input mask is bigger than unsigned long, shape and GLSZM cannot be computed for this mask. MEMORY OVERFLOW!")
+      sys.exit(1)
+      
 
     self.logger.debug('Pre-calculate Volume, Surface Area and Eigenvalues')
 
