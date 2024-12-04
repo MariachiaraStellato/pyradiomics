@@ -11,7 +11,7 @@
 // **************************************************
 
 
-void calculate_meshDiameter(double *vertices, size_t v_idx, double *diameters);
+void calculate_meshDiameter(double *vertices, unsigned long v_idx, double *diameters);
 
 // Declare the look-up tables, these are filled at the bottom of this code file.
 static const int gridAngles[8][3];
@@ -27,8 +27,8 @@ int calculate_coefficients(char *mask, int *size, int *strides, double *spacing,
   int a_idx;  // Angle index (8 'angles', one pointing to each corner of the marching cube
 
   static const int points_edges[2][3] = {{6, 4, 3}, {6, 7, 11}};
-  size_t v_idx = 0;
-  size_t v_max = 0;
+  unsigned long v_idx = 0;
+  unsigned long v_max = 0;
   double *vertices;
 
   double sum;
@@ -194,11 +194,11 @@ int calculate_coefficients(char *mask, int *size, int *strides, double *spacing,
   return 0;
 }
 
-void calculate_meshDiameter(double *points, size_t stack_top, double *diameters)
+void calculate_meshDiameter(double *points, unsigned long stack_top, double *diameters)
 {
   double a[3], b[3], ab[3];
   double distance;
-  size_t idx;
+  unsigned long idx;
 
   diameters[0] = 0;
   diameters[1] = 0;
@@ -410,7 +410,7 @@ static const double vertList[12][3] = { { 0, 0, 0.5 }, { 0, 0.5, 1 }, { 0, 1, 0.
 // **************************************************
 
 
-double calculate_meshDiameter2D(double *points, size_t stack_top);
+double calculate_meshDiameter2D(double *points, unsigned long stack_top);
 
 // Declare the look-up tables, these are filled at the bottom of this code file.
 static const int gridAngles2D[4][2];
@@ -425,8 +425,8 @@ int calculate_coefficients2D(char *mask, int *size, int *strides, double *spacin
   int a_idx;  // Angle index (4 'angles', one pointing to each corner of the marching cube
 
   static const int points_edges[2][2] = {{0, 2}, {3, 2}};
-  size_t v_idx = 0;
-  size_t v_max = 0;
+  unsigned long v_idx = 0;
+  unsigned long v_max = 0;
   double *vertices;
 
   double sum;
@@ -560,12 +560,12 @@ int calculate_coefficients2D(char *mask, int *size, int *strides, double *spacin
 }
 
 
-double calculate_meshDiameter2D(double *points, size_t stack_top)
+double calculate_meshDiameter2D(double *points, unsigned long stack_top)
 {
   double diameter = 0;
   double a[2], b[2], ab[3];
   double distance;
-  size_t idx;
+  unsigned long idx;
 
   // so when the first item is popped, it is the last item entered
   while(stack_top > 0)
