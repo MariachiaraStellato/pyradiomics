@@ -74,7 +74,7 @@ class RadiomicsShape(base.RadiomicsFeaturesBase):
     #check if the code can perform shape calculation based on MaskArray dimension
     MASKARRAY = sitk.GetArrayFromImage(self.inputMask)
     dim = MASKARRAY.shape
-    if dim[0]*dim[1]*dim[2]*9 > 1000: #MAX UNSIGNED LONG
+    if dim[0]*dim[1]*dim[2]*9 > 18446744073709551615: #MAX UNSIGNED LONG
       self.logger.error("Size of the input mask is bigger than unsigned long, shape and GLSZM cannot be computed for this mask. MEMORY OVERFLOW!")
       sys.exit(1)
       
